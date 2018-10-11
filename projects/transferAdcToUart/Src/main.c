@@ -39,10 +39,12 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f3xx_hal.h"
+#include "adc.h"
 #include "usart.h"
 #include "gpio.h"
 
 /* USER CODE BEGIN Includes */
+#include "simple_buffer.h"
 
 /* USER CODE END Includes */
 
@@ -50,6 +52,7 @@
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
+extern ADC_HandleTypeDef hadc1;
 
 /* USER CODE END PV */
 
@@ -62,7 +65,7 @@ void SystemClock_Config(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
-
+int adc_val;
 /* USER CODE END 0 */
 
 /**
@@ -95,6 +98,7 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART2_UART_Init();
+  MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -108,6 +112,11 @@ int main(void)
 
   /* USER CODE BEGIN 3 */
 	  HAL_GPIO_TogglePin(GPIOA,GPIO_PIN_5);
+	  HAL_ADC_Start(&hadc1);
+	  HAL_ADC_PollForConversion(&hadc1,100);
+	  adc_val = (int) HAL_ADC_GetValue(&hadc1);
+	  QueuePut(adc_val);
+	  HAL_ADC_Stop(&hadc1);
 	  HAL_Delay(100);
   }
   /* USER CODE END 3 */
@@ -153,8 +162,9 @@ void SystemClock_Config(void)
     _Error_Handler(__FILE__, __LINE__);
   }
 
-  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART2;
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART2|RCC_PERIPHCLK_ADC12;
   PeriphClkInit.Usart2ClockSelection = RCC_USART2CLKSOURCE_PCLK1;
+  PeriphClkInit.Adc12ClockSelection = RCC_ADC12PLLCLK_DIV1;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
     _Error_Handler(__FILE__, __LINE__);
