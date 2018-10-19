@@ -237,10 +237,4 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart_ex.c</locationURI>
 		</link>
 	</linkedResources>
-	<variableList>
-		<variable>
-			<name>Libraries</name>
-			<value>file:/C:/Users/Aleksandr/Documents/projects/projects%202018.IV/environmentNode/libs/simple_buffer.h</value>
-		</variable>
-	</variableList>
 </projectDescription>
