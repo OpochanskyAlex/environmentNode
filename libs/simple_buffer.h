@@ -17,11 +17,20 @@
 /* Queue structure */
 #define QUEUE_ELEMENTS 100
 #define QUEUE_SIZE (QUEUE_ELEMENTS + 1)
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 int Queue[QUEUE_SIZE];
 int QueueIn, QueueOut;
 
 void QueueInit(void);
-int QueuePut(int new);
+int QueuePut(int new_el);
 int QueueGet(int *old);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* APPLICATION_LIBS_SIMPLE_BUFFER_H_ */
