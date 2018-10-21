@@ -31,6 +31,7 @@
 
 #include "simple_buffer.h"
 
+
 int el;
 int main(void){
 	QueuePut(5);
@@ -38,7 +39,7 @@ int main(void){
 	QueuePut(7);
 	QueueGet(&el);
 
-	std::cout << "Hello World!" << el << std::endl;
+	std::cout << "GCC version " << __GNUC__<<"." <<__GNUC_MINOR__ << "." << __GNUC_PATCHLEVEL__ << std::endl;
 
 	return 0;
 }
